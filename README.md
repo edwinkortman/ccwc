@@ -10,3 +10,9 @@ Project idea from: https://codingchallenges.fyi/challenges/challenge-wc/
 ```shell
 go run ccwc -c test/data/text.txt
 ```
+
+## Counting lines
+
+```shell
+go run ccwc -l test/data/text.txt
+```
