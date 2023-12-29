@@ -1,15 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"github.com/KEINOS/go-countline/cl"
 	"log"
 	"os"
+	"strings"
 )
 
-var count = flag.Bool("c", false, "count bytes in given file")
-var lines = flag.Bool("l", false, "count lines in given files")
+var shouldCountBytes = flag.Bool("c", false, "count bytes in given file")
+var shouldCountLines = flag.Bool("l", false, "count lines in given file")
+var shouldCountWords = flag.Bool("w", false, "count words in given file")
 
 func main() {
 	flag.Parse()
@@ -19,20 +22,29 @@ func main() {
 		os.Exit(1)
 	}
 
-	filename, fi, _ := getFileStats()
+	filename, fileStats, file := getFileStats()
 
-	if *count {
-		fmt.Println(fi.Size(), filename)
+	if *shouldCountBytes {
+		fmt.Println(fileStats.Size(), filename)
 	}
 
-	if *lines {
-		filename, _, file := getFileStats()
-
+	if *shouldCountLines {
 		count, err := cl.CountLines(file)
 		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println(count, filename)
+	}
+
+	if *shouldCountWords {
+		scanner := bufio.NewScanner(file)
+		wordCount := 0
+		for scanner.Scan() {
+			words := strings.Fields(scanner.Text())
+			wordCount += len(words)
+		}
+
+		fmt.Println(wordCount, filename)
 	}
 }
 
@@ -46,10 +58,10 @@ func getFileStats() (string, os.FileInfo, *os.File) {
 		os.Exit(1)
 	}
 
-	fi, err := file.Stat()
+	fileStats, err := file.Stat()
 	if err != nil {
 		fmt.Println("Error retrieving statistics:", err)
 		os.Exit(1)
 	}
-	return filename, fi, file
+	return filename, fileStats, file
 }

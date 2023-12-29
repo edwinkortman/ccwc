@@ -16,3 +16,9 @@ go run ccwc -c test/data/text.txt
 ```shell
 go run ccwc -l test/data/text.txt
 ```
+
+## Counting words
+
+```shell
+go run ccwc -w test/data/text.txt
+```
