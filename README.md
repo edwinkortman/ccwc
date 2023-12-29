@@ -8,5 +8,5 @@ Project idea from: https://codingchallenges.fyi/challenges/challenge-wc/
 ## Counting bytes
 
 ```shell
-go run ccwc -c test/data/bytecount.txt
+go run ccwc -c test/data/text.txt
 ```
