@@ -22,3 +22,9 @@ go run ccwc -l test/data/text.txt
 ```shell
 go run ccwc -w test/data/text.txt
 ```
+
+## Counting chracters
+
+```shell
+go run ccwc -m test/data/text.txt 
+```

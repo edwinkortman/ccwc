@@ -13,6 +13,7 @@ import (
 var shouldCountBytes = flag.Bool("c", false, "count bytes in given file")
 var shouldCountLines = flag.Bool("l", false, "count lines in given file")
 var shouldCountWords = flag.Bool("w", false, "count words in given file")
+var shouldCountCharacters = flag.Bool("m", false, "count characters in given file")
 
 func main() {
 	flag.Parse()
@@ -45,6 +46,17 @@ func main() {
 		}
 
 		fmt.Println(wordCount, filename)
+	}
+
+	if *shouldCountCharacters {
+		content, err := os.ReadFile(filename)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// https://stackoverflow.com/questions/12668681/how-to-get-the-number-of-characters-in-a-string
+		// https://github.com/golang/go/issues/24923
+		fmt.Println(len([]rune(string(content))), filename)
 	}
 }
 
